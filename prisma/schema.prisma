@@ -1,0 +1,62 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id      Int       @default(autoincrement()) @id
+  email   String    @unique
+  name    String
+  password  String
+  phone_num String  @unique
+  battery_rating Int  @default(0)
+  admin   Boolean      @default(false)
+  cash  Int  @default(0)
+  created_date DateTime @default(now())
+  updated_date DateTime @updatedAt
+  products Product[]
+}
+
+model Product{
+  id  Int   @default(autoincrement()) @id
+  name String
+  description String?
+  lower_limit_price Int
+  img_path String?
+  start_date DateTime @default(now())
+  end_date DateTime @default(now())
+  seller User @relation(name: "SellerId",fields:[seller_id], references:[id])
+  seller_id Int
+  auction Auction @relation(fields:[auction_id], references:[id])
+  auction_id Int
+  categories Category[]
+}
+
+model Auction{
+  id  Int   @default(autoincrement()) @id 
+  created_date DateTime
+  end_date DateTime
+  final_contract_price Int
+  current_price Int
+  finished Boolean @default(false)
+}
+
+model Category{
+  id  Int @default(autoincrement()) @id
+  name  String
+}
+
+model Profile {
+  id     Int     @default(autoincrement()) @id
+  description    String?
+  profile_image  String?
+  user   User    @relation(fields: [userId], references: [id])
+  userId Int 
+}
