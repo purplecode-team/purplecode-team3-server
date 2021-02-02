@@ -1,18 +1,24 @@
 {
-  "name": "team3",
+  "name": "auction-server",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon src/server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@prisma/cli": "^2.15.0"
+    "@prisma/cli": "^2.15.0",
+    "nodemon": "^2.0.7"
   },
   "dependencies": {
-    "@prisma/client": "^2.15.0"
+    "@prisma/client": "^2.15.0",
+    "dotenv": "^8.2.0",
+    "graphql-tools": "^7.0.2",
+    "graphql-yoga": "^1.18.3",
+    "merge-graphql-schemas": "^1.7.8",
+    "morgan": "^1.10.0"
   }
 }

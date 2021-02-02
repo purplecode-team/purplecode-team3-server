@@ -10,53 +10,106 @@ generator client {
   provider = "prisma-client-js"
 }
 
+// TODO: review 관계 정하기 (auction <-> reivew or user <-> reivew)
+// 현재는 auction <-> reivew로 연결
+
 model User {
-  id      Int       @default(autoincrement()) @id
-  email   String    @unique
-  name    String
-  password  String
-  phone_num String  @unique
-  battery_rating Int  @default(0)
-  admin   Boolean      @default(false)
-  cash  Int  @default(0)
-  created_date DateTime @default(now())
-  updated_date DateTime @updatedAt
-  products Product[]
+  id          Int       @default(autoincrement()) @id
+  email       String?   @unique
+  nickname    String    @unique
+  password    String?
+  isAdmin     Boolean   @default(false) 
+  cash        Int       @default(0)
+  rating      Int       @default(0)
+  bio         String?   @default("")
+  avatarPath  String?   
+  createdAt   DateTime? @default(now())
+  updatedAt   DateTime? @updatedAt
+  
+  products    Product[] @relation("UserPost")
+
+  auctions    Auction[] @relation("UserAuction")
+
+  likes       Like[]    @relation("UserLike")
 }
 
-model Product{
-  id  Int   @default(autoincrement()) @id
-  name String
-  description String?
-  lower_limit_price Int
-  img_path String?
-  start_date DateTime @default(now())
-  end_date DateTime @default(now())
-  seller User @relation(name: "SellerId",fields:[seller_id], references:[id])
-  seller_id Int
-  auction Auction @relation(fields:[auction_id], references:[id])
-  auction_id Int
-  categories Category[]
+model Product {
+  id          Int       @default(autoincrement()) @id
+  title       String    @default("")
+  description String    @default("")
+  startPrice  Int       
+  bidPrice    Int       
+  startDate   DateTime 
+  endDate     DateTime 
+  isAuction   Boolean   @default(false)
+  isEnd       Boolean   @default(false)
+  createdAt   DateTime? @default(now())
+  updatedAt   DateTime? @updatedAt
+
+  auctions    Auction[] @relation("ProductAuction")
+
+  images      Image[]   @relation("ProductImage")
+
+  likes       Like[]    @relation("ProductLike")
+
+  seller      Int
+  user        User      @relation(name: "UserPost", fields: [seller], references: [id])
+  
+  idCategroy  Int
+  category    Category  @relation(name: "CategoryProduct", fields: [idCategroy], references: [id])
 }
 
-model Auction{
-  id  Int   @default(autoincrement()) @id 
-  created_date DateTime
-  end_date DateTime
-  final_contract_price Int
-  current_price Int
-  finished Boolean @default(false)
+model Auction {
+  id            Int       @default(autoincrement()) @id
+  currentPrice  Int
+  bidCount      Int
+  bidEnd        Boolean   @default(false)
+  createdAt     DateTime? @default(now())
+  updatedAt     DateTime? @updatedAt
+
+  reviews       Review[]  @relation("AuctionReview")
+
+  bidder        Int
+  user          User      @relation(name: "UserAuction", fields: [bidder], references: [id])
+
+  bidProduct    Int
+  product       Product   @relation(name: "ProductAuction", fields: [bidProduct], references: [id])
 }
 
-model Category{
-  id  Int @default(autoincrement()) @id
-  name  String
+model Image {
+  id         Int       @default(autoincrement()) @id
+  imagePath  String   
+  createdAt  DateTime? @default(now())
+  updatedAt  DateTime? @updatedAt
+
+  idProduct  Int
+  product    Product   @relation(name: "ProductImage", fields: [idProduct], references: [id])
 }
 
-model Profile {
-  id     Int     @default(autoincrement()) @id
-  description    String?
-  profile_image  String?
-  user   User    @relation(fields: [userId], references: [id])
-  userId Int 
+model Category {
+  id            Int       @default(autoincrement()) @id
+  categoryName  String 
+
+  products      Product[] @relation("CategoryProduct")
+}
+
+model Review {
+  id            Int       @default(autoincrement()) @id
+  reviewContent String 
+  reviewPoint   Int
+  createdAt     DateTime? @default(now())
+  updatedAt     DateTime? @updatedAt
+  
+  idAuction     Int
+  auction       Auction  @relation(name: "AuctionReview", fields: [idAuction], references: [id])
+}
+
+model Like{
+  id        Int       @default(autoincrement()) @id
+
+  idUser    Int
+  user      User      @relation(name: "UserLike", fields: [idUser], references: [id])
+
+  idProduct Int
+  product   Product   @relation(name: "ProductLike", fields: [idProduct], references: [id])
 }
