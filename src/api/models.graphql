@@ -1,0 +1,11 @@
+type User {
+  id:          Int!        
+  email:       String!   
+  nickname:    String!   
+  password:    String!
+  isAdmin:     Boolean    
+  cash:        Int       
+  rating:      Int       
+  bio:         String   
+  avatarPath:  String   
+}
