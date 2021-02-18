@@ -1,17 +1,23 @@
+const bcrypt = require("bcrypt");
 module.exports = {
     Mutation: {
         editUser: async(_,args,{request, isAuthenticated, prisma})=>{
             isAuthenticated(request);       //request로 user가 들어오는것 같음
             const{nickname, password, bio, profilePath} = args;
             const{user} = request;
+            var hash;
+            if(password){
+                hash = await bcrypt.hash(password,12);
+            }
+            //hash 부분 좀더 깔끔하게 정리 가능?
 
-            return prisma.updateUser({
+            return prisma.user.update({
                 where:{
                     id:user.id,
                 },
                 data:{
                     nickname,
-                    password,
+                    password : hash,
                     bio,
                     profilePath
                 }

@@ -11,21 +11,21 @@ const jwtOptions = {
 
 const verifyUser = async(payload, done)=>{ //payload is an object literal containing the decoded JWT payload
     console.log("verifyUSER 실행 시작!!!!!!!!!")
-    console.log(payload.id);
-    console.log(payload.nickname);
     try{
-        const user = await prisma.user.findOne({
+        const user = await prisma.user.findUnique({
             where : {id : payload.id}
         });
+        console.log("id는", user.id);
+        console.log("email은", user.email);
         if (user){
-            console.log(user, "user값 넘겨줌!!!!!!");
+            console.log("user값 넘겨줌!!!!!!");
             return done (null, user);
         }else{
             console.log("user값 없어");
             return done (null, false);
         }
     }catch(err){
-        return done(error, false);
+        return done(err, false);
     }
 };
 
