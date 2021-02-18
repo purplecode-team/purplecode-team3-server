@@ -5,9 +5,9 @@ module.exports = {
             isAuthenticated(request);       //request로 user가 들어오는것 같음
             const{nickname, password, bio, profilePath} = args;
             const{user} = request;
-            var hash;
+            console.log(password);
             if(password){
-                hash = await bcrypt.hash(password,12);
+                var hash = await bcrypt.hash(password,12);
             }
             //hash 부분 좀더 깔끔하게 정리 가능?
 
