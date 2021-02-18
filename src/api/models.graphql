@@ -1,6 +1,6 @@
 type User {
   id:          Int!       
-  email:       String!
+  email:       String!   
   nickname:    String!    
   password:    String!
   isAdmin:     Boolean!    
