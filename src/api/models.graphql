@@ -1,11 +1,105 @@
 type User {
-  id:          Int!        
-  email:       String!   
-  nickname:    String!   
+  id:          Int!       
+  email:       String!
+  nickname:    String!    
   password:    String!
-  isAdmin:     Boolean    
-  cash:        Int       
-  rating:      Int       
+  isAdmin:     Boolean!    
+  cash:        Int!       
+  rating:      Int!       
   bio:         String   
-  avatarPath:  String   
+  profilePath: String   
+  createdAt:   String 
+  updatedAt:   String 
+  
+  products:    [Product] 
+  auctions:    [Auction] 
+  likes:       [Like]    
+  toReviews:   [Review]  
+  fromReviews: [Review]  
+  chatRooms:   [ChatRoom]
+  leaderRooms: [ChatRoom]
+  messages:    [Message] 
+}
+
+type Product {
+  id:          Int!       
+  title:       String!    
+  description: String!    
+  startPrice:  Int!       
+  bidPrice:    Int!       
+  startDate:   String! 
+  endDate:     String! 
+  isAuction:   Boolean!   
+  isEnd:       Boolean!   
+  createdAt:   String 
+  updatedAt:   String 
+  auctions:    [Auction] 
+  images:      [Image]   
+  likes:       [Like]    
+  
+  user:        User!      
+  category:    Category!  
+}
+
+type Auction {
+  id:            Int!       
+  currentPrice:  Int!
+  bidCount:      Int!
+  bidEnd:        Boolean!   
+  createdAt:     String 
+  updatedAt:     String 
+  
+  user:          User!      
+  product:       Product!   
+}
+
+type Image {
+  id:         Int!       
+  imagePath:  String!   
+  createdAt:  String 
+  updatedAt:  String 
+
+  product:    Product! 
+}
+
+type Category {
+  id:            Int!       
+  categoryName:  String! 
+  products:      [Product]
+}
+
+type Review {
+  id:            Int!       
+  reviewContent: String! 
+  reviewPoint:   Int!
+  createdAt:     String 
+  updatedAt:     String 
+  
+  bidder:        User!    
+  seller:        User!    
+}
+
+type Like{
+  id:        Int!       
+  user:      User!      
+  product:   Product!   
+}
+
+type ChatRoom{
+  id:            Int!       
+  idMainUser:    Int!       
+  mainUser:      User!     
+  createdAt:     String!  
+  messages:      [Message] 
+  users:         [User]    
+}
+
+type Message{
+  id:            Int!       
+  createdAt:     String!  
+  updatedAt:     String!  
+  text:          String!
+  
+  user:          User!     
+  room:          ChatRoom! 
 }
