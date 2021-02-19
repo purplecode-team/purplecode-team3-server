@@ -74,6 +74,7 @@ model Image {
   imagePath  String   
   createdAt  DateTime? @default(now())
   updatedAt  DateTime? @updatedAt
+
   idProduct  Int
   product    Product   @relation(name: "ProductImage", fields: [idProduct], references: [id])
 }
@@ -81,6 +82,7 @@ model Image {
 model Category {
   id            Int       @default(autoincrement()) @id
   categoryName  String 
+
   products      Product[] @relation("CategoryProduct")
 }
 
@@ -90,8 +92,7 @@ model Review {
   reviewPoint   Int
   createdAt     DateTime? @default(now())
   updatedAt     DateTime? @updatedAt
-  
-  
+    
   idBidder      Int
   bidder        User     @relation("ReviewSender", fields: [idBidder], references: [id])
   idSeller      Int
@@ -100,6 +101,7 @@ model Review {
 
 model Like{
   id        Int       @default(autoincrement()) @id
+  
   idUser    Int
   user      User      @relation(name: "UserLike", fields: [idUser], references: [id])
   idProduct Int

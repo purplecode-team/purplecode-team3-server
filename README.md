@@ -1,4 +1,3 @@
-# purplecode-team3-server
 ## git commit rule
 
 - `add`: (새로운 파일 추가)
@@ -24,4 +23,9 @@
 
 **개발하는동안(repository가 비공개일때)**은 `.DS_Store`, `node_modules`외 추가하지 말기
 
+
 배포할 때는 공개하면 안되는 것들 추가해서 올리기
+
+## TODO
+
+
