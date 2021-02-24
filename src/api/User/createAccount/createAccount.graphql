@@ -1,0 +1,12 @@
+type Query {
+    user: [User]
+}
+type Mutation {
+    createAccount(
+        email:String!
+        nickname:String!    
+        password:String!
+        bio:String
+        isAdmin:Boolean
+    ): User!
+}

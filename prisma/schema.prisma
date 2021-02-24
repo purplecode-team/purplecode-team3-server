@@ -1,0 +1,127 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// TODO: review 관계 정하기 (auction <-> reivew or user <-> reivew)
+// 현재는 auction <-> reivew로 연결
+
+model User {
+  id          Int       @default(autoincrement()) @id
+  email       String?   @unique
+  nickname    String    @unique
+  password    String
+  isAdmin     Boolean   @default(false) 
+  cash        Int       @default(0)
+  rating      Int       @default(0)
+  bio         String?   @default("")
+  profilePath String?   
+  createdAt   DateTime? @default(now())
+  updatedAt   DateTime? @updatedAt
+  
+  products    Product[] @relation("UserPost")
+  auctions    Auction[] @relation("UserAuction")
+  likes       Like[]    @relation("UserLike")
+  toReviews   Review[]  @relation("ReviewReceiver")
+  fromReviews Review[]  @relation("ReviewSender")
+  chatRooms   ChatRoom[]@relation("UserChatRoom")
+  leaderRooms ChatRoom[]@relation("UserLeaderRoom")
+  messages    Message[] @relation("UserMessage")
+}
+
+model Product {
+  id          Int       @default(autoincrement()) @id
+  title       String    @default("")
+  description String    @default("")
+  startPrice  Int       
+  bidPrice    Int       
+  startDate   DateTime 
+  endDate     DateTime 
+  isAuction   Boolean   @default(false)
+  isEnd       Boolean   @default(false)
+  createdAt   DateTime? @default(now())
+  updatedAt   DateTime? @updatedAt
+  auctions    Auction[] @relation("ProductAuction")
+  images      Image[]   @relation("ProductImage")
+  likes       Like[]    @relation("ProductLike")
+  idSeller    Int
+  user        User      @relation(name: "UserPost", fields: [idSeller], references: [id])
+  
+  idCategory  Int
+  category    Category  @relation(name: "CategoryProduct", fields: [idCategory], references: [id])
+}
+
+model Auction {
+  id            Int       @default(autoincrement()) @id
+  currentPrice  Int
+  bidCount      Int
+  bidEnd        Boolean   @default(false)
+  createdAt     DateTime? @default(now())
+  updatedAt     DateTime? @updatedAt
+  
+  idBidder        Int
+  user          User      @relation(name: "UserAuction", fields: [idBidder], references: [id])
+  idProduct    Int
+  product       Product   @relation(name: "ProductAuction", fields: [idProduct], references: [id])
+}
+
+model Image {
+  id         Int       @default(autoincrement()) @id
+  imagePath  String   
+  createdAt  DateTime? @default(now())
+  updatedAt  DateTime? @updatedAt
+  idProduct  Int
+  product    Product   @relation(name: "ProductImage", fields: [idProduct], references: [id])
+}
+
+model Category {
+  id            Int       @default(autoincrement()) @id
+  categoryName  String 
+  products      Product[] @relation("CategoryProduct")
+}
+
+model Review {
+  id            Int       @default(autoincrement()) @id
+  reviewContent String 
+  reviewPoint   Int
+  createdAt     DateTime? @default(now())
+  updatedAt     DateTime? @updatedAt
+  
+  
+  idBidder      Int
+  bidder        User     @relation("ReviewSender", fields: [idBidder], references: [id])
+  idSeller      Int
+  seller        User     @relation("ReviewReceiver", fields: [idSeller], references: [id])
+}
+
+model Like{
+  id        Int       @default(autoincrement()) @id
+  idUser    Int
+  user      User      @relation(name: "UserLike", fields: [idUser], references: [id])
+  idProduct Int
+  product   Product   @relation(name: "ProductLike", fields: [idProduct], references: [id])
+}
+
+model ChatRoom{
+  id            Int       @default(autoincrement()) @id
+  idMainUser    Int       
+  mainUser      User      @relation(name: "UserLeaderRoom", fields: [idMainUser], references:[id])
+  createdAt     DateTime  @default(now())
+  messages      Message[] @relation("ChatRoomMessage")
+  users         User[]    @relation("UserChatRoom")
+}
+
+model Message{
+  id            Int       @default(autoincrement()) @id
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  text          String
+  idUser        Int
+  user          User      @relation(name: "UserMessage", fields: [idUser], references:[id])
+  idRoom        Int
+  room          ChatRoom  @relation(name: "ChatRoomMessage", fields: [idRoom], references: [id])
+}

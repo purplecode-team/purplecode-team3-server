@@ -1,0 +1,8 @@
+type Query {
+    category: [Category]
+}
+type Mutation {
+    createCategory(
+        categoryName: String!
+    ): Boolean!
+}
