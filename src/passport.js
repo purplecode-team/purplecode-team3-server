@@ -14,18 +14,14 @@ const jwtOptions = {
 
 const verifyUser = async (payload, done) => {
   //payload is an object literal containing the decoded JWT payload
-  console.log("verifyUSER 실행 시작!!!!!!!!!");
   try {
     const user = await prisma.user.findUnique({
       where: { id: payload.id },
     });
-    console.log("id는", user.id);
     console.log("email은", user.email);
     if (user) {
-      console.log("user값 넘겨줌!!!!!!");
       return done(null, user);
     } else {
-      console.log("user값 없어");
       return done(null, false);
     }
   } catch (err) {
@@ -36,7 +32,6 @@ const verifyUser = async (payload, done) => {
 exports.authenticateJwt = (req, res, next) =>
   passport.authenticate("jwt", { sessions: false }, (error, user) => {
     if (user) {
-      console.log("authenticate JWT 줄게에에~!~~~~~~~~~~~~~~");
       req.user = user;
       // express router
       // authenticate를 진행하게 되면 req.user에는 user가 serialize 되기 때문에

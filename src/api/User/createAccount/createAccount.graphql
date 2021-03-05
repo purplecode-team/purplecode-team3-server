@@ -1,12 +1,6 @@
 type Query {
-    user: [User]
+  user: [User]
 }
 type Mutation {
-    createAccount(
-        email:String!
-        nickname:String!    
-        password:String!
-        bio:String
-        isAdmin:Boolean
-    ): User!
+  createAccount(email: String!, nickname: String!, password: String!, bio: String, isAdmin: Boolean): Boolean!
 }
