@@ -1,4 +1,5 @@
 scalar DateTime
+# DateTime 대신에 String을 받아서 .js에서 DateTime으로 변환해줌
 type Query {
     user: [User]
 }
@@ -9,8 +10,8 @@ type Mutation {
         description: String
         startPrice: Int!
         bidPrice: Int!
-        startDate: DateTime!
-        endDate: DateTime!
+        startDate: String!
+        endDate: String!
         images: [String!]!
     ): Product!
 }

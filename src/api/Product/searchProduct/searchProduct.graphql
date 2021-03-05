@@ -1,0 +1,9 @@
+type Query {
+    searchProduct(
+        name: String
+        startdate: String
+        enddate: String
+        startprice: Int
+        endprice: Int
+    ):[Product!]!
+}
