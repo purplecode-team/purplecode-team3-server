@@ -1,20 +1,24 @@
 module.exports = {
     Mutation: {
+        //startDate받아서 Datetime형으로 변환 -> startDates
+        //startDate받아서 Datetime형으로 변환 -> endDates
+        //endDates에 7분더함
         uploadProduct: async(_,args,{request, isAuthenticated, prisma})=>{
             isAuthenticated(request);
-            let {idCategory, title, description = "", startPrice, bidPrice, startDate, endDate, images} = args;
+            let {idCategory, title, description = "", startPrice, bidPrice, startDate, images} = args;
             const{user} = request;
             let startDates = new Date(startDate);
-            let endDates = new Date(endDate);
-            //startDate(STRING)을 받아서 startDates(DateTime)으로 변환해줌
-            console.log(startDates);
             let today = new Date();
-            console.log(today);
             let tomorrow = new Date(today);
             tomorrow.setDate(tomorrow.getDate() + 1);
             tomorrow.setHours(0,0,0,0);
-            console.log(tomorrow);
+            //내일 날짜를 설정하는 과정
             if(startDates > tomorrow){
+                let endDates = new Date(startDate);
+                endDates.setMinutes(endDates.getMinutes() + 7); //endDates는 
+                //startDate(STRING)을 받아서 startDates(DateTime)으로 변환해줌
+                console.log(startDates);
+                console.log(endDates);
                 console.log("내일 이후임 true");
                 const product = await prisma.product.create({
                     data:{

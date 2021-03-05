@@ -1,0 +1,20 @@
+enum ACTIONS{
+    EDIT
+    DELETE
+}
+type Query {
+    product: [Product]
+}
+type Mutation {
+    editProduct(
+        action: ACTIONS
+        id: Int!
+        idCategory: Int
+        title: String
+        description: String
+        startPrice: Int
+        bidPrice: Int
+        startDate: String
+        images: [String]
+    ): Product!
+}
