@@ -2,7 +2,7 @@ const DELETE =  "DELETE";
 const EDIT = "EDIT";
 module.exports = {
     Mutation: {
-        editProduct: async(_,args,{request, isAuthenticated, prisma})=>{
+        editProduct: async(_,args,{request, isAuthenticated,setDate, prisma})=>{
             isAuthenticated(request);
             const {action, id, idCategory, title, description, startPrice, bidPrice, startDate, images=[]} = args;
             const {user} = request;
@@ -11,18 +11,9 @@ module.exports = {
             });
             console.log(products);
             if(user.id == products.idSeller){ //Login한 User와 Product Seller의 User가 같은지 확인
-              if(action == EDIT){
-                let endDates;
-                if(startDate){
-                  let today = new Date();
-                  let tomorrow = new Date(today);
-                  tomorrow.setDate(tomorrow.getDate() +1);
-                  tomorrow.setHours(0,0,0,0);
-                  endDates = new Date(startDate);
-                  endDates.setMinutes(endDates.getMinutes() + 7);
-                  if(new Date(startDate) < tomorrow){
-                    console.error("날짜를 내일 이후로 설정해주세요");
-                  }
+              if(action == EDIT){//수정하는경우
+                if(startDate){//startDate를 수정하는경우
+                  let [startDates,endDates] = setDate(startDate);
                   await prisma.product.update({
                     where: {id},
                     data: {
@@ -31,23 +22,24 @@ module.exports = {
                       description, 
                       startPrice, 
                       bidPrice, 
-                      startDate: new Date(startDate),
+                      startDate: startDates,
                       endDate: endDates
                     }
                   });    
+                }else{//startDate를 수정하지 않는경우
+                  await prisma.product.update({
+                    where: {id},
+                    data: {
+                      idCategory, 
+                      title, 
+                      description, 
+                      startPrice, 
+                      bidPrice
+                    }
+                  });
                 }
-              await prisma.product.update({
-                where: {id},
-                data: {
-                  idCategory, 
-                  title, 
-                  description, 
-                  startPrice, 
-                  bidPrice
-                }
-              });
               console.log("prdocut update complished");
-              if(images.length >0){
+              if(images.length >0){//image를 수정하는경우
                 images.forEach(async(image)=>{
                   await prisma.image.update({
                       data:{
@@ -58,13 +50,13 @@ module.exports = {
                 });
               }
               return products;
-              }else if(action == DELETE){
+              }else if(action == DELETE){//삭제하는경우
                 return await prisma.product.delete({
                   where: {id}
                 });
               }
             }else{
-              console.error("User and Product Seller doesn't match");
+              throw error("User and Product Seller doesn't match");
             }
             
           }
