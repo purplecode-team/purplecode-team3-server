@@ -1,10 +1,9 @@
 const {generateToken} = require("../../../utils");
 const bcrypt = require("bcrypt");
 module.exports = {
-    Query: {
+    Mutation:{
         loginUser: async(_,args,{request, prisma})=>{
             const{email, password} = args;
-            console.log(password);
             const person = await prisma.user.findUnique({
                 where: {email}
             });

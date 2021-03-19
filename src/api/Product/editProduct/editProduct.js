@@ -14,6 +14,12 @@ module.exports = {
               if(action == EDIT){//수정하는경우
                 if(startDate){//startDate를 수정하는경우
                   let [startDates,endDates] = setDate(startDate);
+                  if(exist.length >0){
+                    for(let i=0; i<exist.length; i++){       
+                      if((exist[i].startDate< endDates && exist[i].startDate> startDates) || (exist[i].endDate< endDates && exist[i].endDate> startDates))
+                          throw Error("같은 시간대에 진행하는 경매가 있습니다")
+                  }
+                }
                   await prisma.product.update({
                     where: {id},
                     data: {

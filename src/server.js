@@ -3,24 +3,29 @@ const passport = require("./passport");
 const schema = require("./schema");
 const dotenv = require("dotenv");
 const { authenticateJwt } = require('./passport');
-const {isAuthenticated, setDate} = require('./middlewares');
+const {isAuthenticated, setDate, getNow} = require('./middlewares');
 const { PrismaClient } = require('@prisma/client');
-const { GraphQLServer} = require("graphql-yoga");
+const { GraphQLServer, PubSub} = require("graphql-yoga");
 
 
 dotenv.config();
 const prisma = new PrismaClient();
+const pubsub = new PubSub();
 const PORT = process.env.PORT || 4000;
 
 
 const server = new GraphQLServer({ 
   schema,
-  context: ({ request }) => ({ request, isAuthenticated, setDate, prisma})
+  context: ({ request }) => ({ request, isAuthenticated, setDate, prisma, pubsub})
 });
-
+// resetPoint;
 server.express.use(morgan("dev"));
 server.express.use(authenticateJwt);
+
+
 
 server.start({ port: PORT }, () => {
   console.log("server start");
 });
+
+//Q1: 왜 utils에서 resetPoint 를 이곳에 안가져왔음에도, 계속 실행이 되는가?

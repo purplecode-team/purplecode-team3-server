@@ -1,11 +1,6 @@
 module.exports = {
     Query: {
         seeUser: async(_,args, {request, prisma})=>{
-            if(!request.user){
-                console.log("user 없당");
-            }else{
-                console.log("user 있당");
-            }
             const{user} = request;
             const{nickname} = args;
             const person = await prisma.user.findUnique({

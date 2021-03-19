@@ -8,14 +8,22 @@ exports.isAuthenticated = (req)=>{
 exports.setDate = (args) => {
     console.log("setTime 실행!");
     let startDate = new Date(args);
+    startDate.setHours(startDate.getHours() + 9);
     let endDate = new Date(startDate);
-    endDate.setMinutes(endDate.getMinutes() + 7);
-    let today = new Date();
+    endDate.setMinutes(endDate.getMinutes() + 13);
+    const today = getToday();
     let tomorrow = new Date(today);
     tomorrow.setDate(tomorrow.getDate() +1);
-    tomorrow.setHours(0,0,0,0);
+    tomorrow.setHours(-15,0,0,0);
     if(startDate< tomorrow){
         throw error("날짜를 내일 이후로 설정해주세요");
     }
     return [startDate, endDate];
+}
+
+exports.getNow = ()=>{
+    console.log("getToday 실행!");
+    let now = new Date();
+    now.setHours(now.getHours() + 9);
+    return now;
 }

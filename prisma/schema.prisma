@@ -58,14 +58,14 @@ model Product {
 model Auction {
   id            Int       @default(autoincrement()) @id
   currentPrice  Int
-  bidCount      Int
+  bidCount      Int       @default(0)
   bidEnd        Boolean   @default(false)
   createdAt     DateTime? @default(now())
   updatedAt     DateTime? @updatedAt
   
-  idBidder        Int
-  user          User      @relation(name: "UserAuction", fields: [idBidder], references: [id])
-  idProduct    Int
+  idSeller      Int
+  user          User      @relation(name: "UserAuction", fields: [idSeller], references: [id])
+  idProduct     Int
   product       Product   @relation(name: "ProductAuction", fields: [idProduct], references: [id])
 }
 

@@ -1,5 +1,5 @@
 type Mutation {
     toggleLike(
-        productId: String!
+        productId: Int!
     ): Boolean!
 }
