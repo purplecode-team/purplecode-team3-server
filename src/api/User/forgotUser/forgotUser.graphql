@@ -1,0 +1,14 @@
+enum ACTIONS{
+    FINDID
+    FINDPWD
+}
+type Query {
+    user: [User]
+}
+type Mutation {
+    forgotUser(
+        action: ACTIONS!
+        email: String
+        phoneNum: Int
+    ): User!
+}

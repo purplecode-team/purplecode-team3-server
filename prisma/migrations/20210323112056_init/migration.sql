@@ -4,6 +4,7 @@ CREATE TABLE `User` (
     `email` VARCHAR(191),
     `nickname` VARCHAR(191) NOT NULL,
     `password` VARCHAR(191) NOT NULL,
+    `phoneNum` INTEGER NOT NULL,
     `isAdmin` BOOLEAN NOT NULL DEFAULT false,
     `cash` INTEGER NOT NULL DEFAULT 0,
     `rating` INTEGER NOT NULL DEFAULT 0,
@@ -13,6 +14,7 @@ CREATE TABLE `User` (
     `updatedAt` DATETIME(3),
 UNIQUE INDEX `User.email_unique`(`email`),
 UNIQUE INDEX `User.nickname_unique`(`nickname`),
+UNIQUE INDEX `User.phoneNum_unique`(`phoneNum`),
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
