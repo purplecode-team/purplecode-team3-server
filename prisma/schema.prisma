@@ -64,8 +64,8 @@ model Auction {
   createdAt     DateTime? @default(now())
   updatedAt     DateTime? @updatedAt
   
-  idSeller      Int
-  user          User      @relation(name: "UserAuction", fields: [idSeller], references: [id])
+  idBuyer       Int
+  user          User      @relation(name: "UserAuction", fields: [idBuyer], references: [id])
   idProduct     Int
   product       Product   @relation(name: "ProductAuction", fields: [idProduct], references: [id])
 }
