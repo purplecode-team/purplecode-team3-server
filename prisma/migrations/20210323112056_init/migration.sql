@@ -4,7 +4,7 @@ CREATE TABLE `User` (
     `email` VARCHAR(191),
     `nickname` VARCHAR(191) NOT NULL,
     `password` VARCHAR(191) NOT NULL,
-    `phoneNum` INTEGER NOT NULL,
+    `phoneNum` VARCHAR(191) NOT NULL,
     `isAdmin` BOOLEAN NOT NULL DEFAULT false,
     `cash` INTEGER NOT NULL DEFAULT 0,
     `rating` INTEGER NOT NULL DEFAULT 0,
