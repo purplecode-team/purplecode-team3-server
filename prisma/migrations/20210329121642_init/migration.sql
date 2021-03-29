@@ -28,6 +28,8 @@ CREATE TABLE `Product` (
     `bidPrice` INTEGER NOT NULL,
     `startDate` DATETIME(3) NOT NULL,
     `endDate` DATETIME(3) NOT NULL,
+    `productNum` VARCHAR(191) NOT NULL,
+    `usedDate` INTEGER NOT NULL,
     `isAuction` BOOLEAN NOT NULL DEFAULT false,
     `isEnd` BOOLEAN NOT NULL DEFAULT false,
     `createdAt` DATETIME(3) DEFAULT CURRENT_TIMESTAMP(3),
@@ -46,7 +48,7 @@ CREATE TABLE `Auction` (
     `bidEnd` BOOLEAN NOT NULL DEFAULT false,
     `createdAt` DATETIME(3) DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3),
-    `idSeller` INTEGER NOT NULL,
+    `idBuyer` INTEGER NOT NULL,
     `idProduct` INTEGER NOT NULL,
 
     PRIMARY KEY (`id`)
@@ -129,7 +131,7 @@ ALTER TABLE `Product` ADD FOREIGN KEY (`idSeller`) REFERENCES `User`(`id`) ON DE
 ALTER TABLE `Product` ADD FOREIGN KEY (`idCategory`) REFERENCES `Category`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Auction` ADD FOREIGN KEY (`idSeller`) REFERENCES `User`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `Auction` ADD FOREIGN KEY (`idBuyer`) REFERENCES `User`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Auction` ADD FOREIGN KEY (`idProduct`) REFERENCES `Product`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;

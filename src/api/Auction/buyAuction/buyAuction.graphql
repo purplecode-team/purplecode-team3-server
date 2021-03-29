@@ -1,0 +1,7 @@
+type Mutation {
+    buyAuction(
+        idAuction: Int
+        idProduct: Int!
+        uploadPrice: Int!
+    ):Auction
+}

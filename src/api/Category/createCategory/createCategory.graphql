@@ -6,3 +6,10 @@ type Mutation {
         categoryName: String!
     ): Boolean!
 }
+
+// 1. Cateogry query로 받아오기 //
+// 2. forgot user 이메일 보내기(비번 찾기) //
+// 3. (sub)chat Room, Message 
+// 4. (sub) 입찰 가격 실시간 변동
+// 5. 경매 끝났을때 review 작성
+// 6. prisma update 공부 -> Product 스키마에 제품명(제품 id), 사용기간 컬럼 추가 //

@@ -1,0 +1,5 @@
+type Subscription {
+    createAuction(
+        idAuction: Int!
+    ): Auction
+}

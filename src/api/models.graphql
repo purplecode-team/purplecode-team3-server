@@ -3,7 +3,8 @@ type User {
   email:       String!   
   nickname:    String!    
   password:    String!
-  isAdmin:     Boolean!    
+  isAdmin:     Boolean! 
+  phoneNum:    String! 
   cash:        Int!       
   rating:      Int!       
   bio:         String   
@@ -29,6 +30,8 @@ type Product {
   bidPrice:    Int!       
   startDate:   String! 
   endDate:     String! 
+  productNum:  String
+  usedDate:    Int
   isAuction:   Boolean!   
   isEnd:       Boolean!   
   createdAt:   String 

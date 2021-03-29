@@ -5,7 +5,7 @@ module.exports = {
         //endDates에 7분더함
         uploadProduct: async(_,args,{request, isAuthenticated, setDate, prisma})=>{
             isAuthenticated(request);
-            let {idCategory, title, description = "", startPrice, bidPrice, startDate, images} = args;
+            let {idCategory, title, description = "", startPrice, bidPrice, startDate, usedDate, productNum ="", images} = args;
             const{user} = request;
             let [startDates, endDates] = setDate(startDate);
             const exist = await prisma.product.findMany({
@@ -27,6 +27,8 @@ module.exports = {
                     bidPrice,
                     startDate: startDates,
                     endDate : endDates,
+                    usedDate,
+                    productNum,
                     idSeller: user.id
                 }
             });

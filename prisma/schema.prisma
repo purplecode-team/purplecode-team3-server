@@ -42,6 +42,8 @@ model Product {
   bidPrice    Int       
   startDate   DateTime 
   endDate     DateTime 
+  productNum  String
+  usedDate    Int
   isAuction   Boolean   @default(false)
   isEnd       Boolean   @default(false)
   createdAt   DateTime? @default(now())

@@ -11,6 +11,8 @@ type Mutation {
         startPrice: Int!
         bidPrice: Int!
         startDate: String!
+        usedDate: Int!
+        productNum: String
         images: [String!]!
     ): Product!
 }
