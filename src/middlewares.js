@@ -11,12 +11,13 @@ exports.setDate = (args) => {
     startDate.setHours(startDate.getHours() + 9);
     let endDate = new Date(startDate);
     endDate.setMinutes(endDate.getMinutes() + 13);
-    const today = getToday();
+    const today = new Date();
+    today.setHours(today.getHours()+9);
     let tomorrow = new Date(today);
     tomorrow.setDate(tomorrow.getDate() +1);
     tomorrow.setHours(-15,0,0,0);
     if(startDate< tomorrow){
-        throw error("날짜를 내일 이후로 설정해주세요");
+        throw Error("날짜를 내일 이후로 설정해주세요");
     }
     return [startDate, endDate];
 }
