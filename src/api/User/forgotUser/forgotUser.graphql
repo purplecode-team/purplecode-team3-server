@@ -9,6 +9,6 @@ type Mutation {
     forgotUser(
         action: ACTIONS!
         email: String
-        phoneNum: Int
+        phoneNum: String
     ): User!
 }
