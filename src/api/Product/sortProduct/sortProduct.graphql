@@ -1,0 +1,12 @@
+enum ACTIONS {
+  NEW
+  FAST
+  HOT
+  PRICE
+}
+type Query {
+  product: [Product]
+}
+type Query {
+  sortProduct(action: ACTIONS!, productIds: [Int]): [Product]
+}
