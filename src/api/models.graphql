@@ -36,10 +36,11 @@ type Product {
   isEnd:       Boolean!   
   createdAt:   String 
   updatedAt:   String 
+  countLike:   Int
   auctions:    [Auction] 
   images:      [Image]   
   likes:       [Like]    
-  
+
   user:        User!      
   category:    Category!  
 }

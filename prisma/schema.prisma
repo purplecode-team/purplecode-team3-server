@@ -48,6 +48,7 @@ model Product {
   isEnd       Boolean   @default(false)
   createdAt   DateTime? @default(now())
   updatedAt   DateTime? @updatedAt
+  countLike   Int       @default(0)
   auctions    Auction[] @relation("ProductAuction")
   images      Image[]   @relation("ProductImage")
   likes       Like[]    @relation("ProductLike")

@@ -34,6 +34,7 @@ CREATE TABLE `Product` (
     `isEnd` BOOLEAN NOT NULL DEFAULT false,
     `createdAt` DATETIME(3) DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3),
+    `countLike` INTEGER NOT NULL DEFAULT 0,
     `idSeller` INTEGER NOT NULL,
     `idCategory` INTEGER NOT NULL,
 

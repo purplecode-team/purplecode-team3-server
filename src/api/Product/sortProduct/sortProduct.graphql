@@ -2,7 +2,8 @@ enum ACTIONS {
   NEW
   FAST
   HOT
-  PRICE
+  LOWPRICE
+  HIGHPRICE
 }
 type Query {
   product: [Product]
