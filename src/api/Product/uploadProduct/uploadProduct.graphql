@@ -3,6 +3,10 @@ scalar DateTime
 type Query {
     user: [User]
 }
+type File{
+    url: String!
+}
+
 type Mutation {
     uploadProduct(
         idCategory: Int!
@@ -13,6 +17,6 @@ type Mutation {
         startDate: String!
         usedDate: Int!
         productNum: String
-        images: [String!]!
+        file: String!
     ): Product!
 }

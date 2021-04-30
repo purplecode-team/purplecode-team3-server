@@ -1,3 +1,5 @@
+const {createWriteStream} = require("fs");
+
 exports.isAuthenticated = (req)=>{
     console.log ("isAuthenticated 실행!~~!!~!~!~!~!~!~!~!~");
     if(!req.user){
@@ -22,9 +24,24 @@ exports.setDate = (args) => {
     return [startDate, endDate];
 }
 
-exports.getNow = ()=>{
-    console.log("getToday 실행!");
-    let now = new Date();
-    now.setHours(now.getHours() + 9);
-    return now;
-}
+exports.generateRandomString = (length) => {
+    const result = [];
+    const characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    const charactersLength = characters.length;
+    for (let i = 0; i < length; i++) {
+      result.push(
+        characters.charAt(Math.floor(Math.random() * charactersLength))
+      );
+    }
+    return result.join("");
+  }
+
+exports.storeUpload = ({stream, filename}) => {
+    new Promise((resolve,reject) => {
+      stream
+        .pipe(createWriteStream(filename + "purple.png"))
+        .on("finish", () => resolve())
+        .on("error", reject)
+    });
+  }

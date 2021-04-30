@@ -3,9 +3,9 @@ module.exports = {
         //startDate받아서 Datetime형으로 변환 -> startDates
         //startDate받아서 Datetime형으로 변환 -> endDates
         //endDates에 7분더함
-        uploadProduct: async(_,args,{request, isAuthenticated, setDate, prisma})=>{
+        uploadProduct: async(_,args,{request, isAuthenticated, setDate ,prisma})=>{
             isAuthenticated(request);
-            let {idCategory, title, description = "", startPrice, bidPrice, startDate, usedDate, productNum ="", images} = args;
+            let {idCategory, title, description = "", startPrice, bidPrice, startDate, usedDate, productNum ="", file} = args;
             const{user} = request;
             let [startDates, endDates] = setDate(startDate);
             const exist = await prisma.product.findMany({
@@ -18,6 +18,8 @@ module.exports = {
                 }
             }
             console.log(startDates, endDates);
+    
+
             const product = await prisma.product.create({
                 data:{
                     idCategory,
@@ -32,14 +34,24 @@ module.exports = {
                     idSeller: user.id
                 }
             });
-            images.forEach(async(image)=>{
-                await prisma.image.create({
-                    data:{
-                        idProduct: product.id,
-                        imagePath: image
-                    }
-                });
-            });
+
+             //image upload/////////////////////////////////////////////////////////////////// url: `http://localhost:4000/images/${randomName}`,
+            // file.forEach(async( )=>{
+            //     let { createReadStream, filename} = await file;
+            //     let { ext } = path.parse(filename);
+            //     let randomName = generateRandomString(12) + ext;
+        
+            //     let stream = createReadStream();
+            //     let pathName = path.join(__dirname, `/public/images/${randomName}`);
+            //     await stream.pipe(fs.createWriteStream(pathName));
+            //     let url = `http://localhost:4000/images/${randomName}`
+            //     await prisma.image.create({
+            //         data:{
+            //             idProduct: product.id,
+            //             imagePath: url
+            //         }
+            //     });
+            // });
             return product;
         }
     }

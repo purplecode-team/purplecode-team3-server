@@ -6,7 +6,30 @@ const LOWPRICE = "LOWPRICE";
 module.exports = {
   Query: {
     sortProduct: async (_, args, { request, prisma }) => {
-      const { action, productIds } = args;
+      const { action, productIds=-1} = args;
+      if(productIds == -1){
+        if(action == NEW){
+          return await prisma.product.findMany({
+            orderBy:{ createdAt:"desc"},
+          });
+        }else if(action == FAST){
+          return await prisma.product.findMany({
+            orderBy:{ startDate: "asc"},
+          });
+        }else if(action == HOT){
+          return await prisma.product.findMany({
+            orderBy:{ countLike : "asc"},
+          });
+        }else if(action == LOWPRICE){
+          return await prisma.product.findMany({
+            orderBy:{ startPrice: "asc"},
+          });
+        }else if(action == HIGHPRICE){
+          return await prisma.product.findMany({
+            orderBy:{ startPrice: "desc"},
+          });
+        }
+      }
       if (action == NEW) {
         const sortedProduct = await prisma.product.findMany({
           where: {

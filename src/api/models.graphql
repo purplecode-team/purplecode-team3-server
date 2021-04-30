@@ -40,7 +40,8 @@ type Product {
   auctions:    [Auction] 
   images:      [Image]   
   likes:       [Like]    
-
+  idCategory:  Int
+  idSeller:    Int
   user:        User!      
   category:    Category!  
 }
@@ -85,6 +86,8 @@ type Review {
 
 type Like{
   id:        Int!       
+  idUser:    Int!
+  idProduct: Int!
   user:      User!      
   product:   Product!   
 }

@@ -3,9 +3,10 @@ const passport = require("./passport");
 const schema = require("./schema");
 const dotenv = require("dotenv");
 const { authenticateJwt } = require('./passport');
-const {isAuthenticated, setDate, getNow} = require('./middlewares');
+const {isAuthenticated, setDate, storeUpload} = require('./middlewares');
 const { PrismaClient } = require('@prisma/client');
 const { GraphQLServer, PubSub} = require("graphql-yoga");
+
 
 
 dotenv.config();
@@ -14,9 +15,10 @@ const pubsub = new PubSub();
 const PORT = process.env.PORT || 4000;
 
 
+
 const server = new GraphQLServer({ 
   schema,
-  context: ({ request }) => ({ request, isAuthenticated, setDate, prisma, pubsub})
+  context: ({ request }) => ({ request, isAuthenticated, setDate, storeUpload, prisma, pubsub})
 });
 // resetPoint;
 server.express.use(morgan("dev"));
